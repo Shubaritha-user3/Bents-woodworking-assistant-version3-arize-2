@@ -12,16 +12,17 @@ process.env["OTEL_EXPORTER_OTLP_HEADERS"] = "api_key=8bb925c083f54c64a9c:affd41e
 process.env["PHOENIX_CLIENT_HEADERS"] = "api_key=8bb925c083f54c64a9c:affd41e";
 process.env["PHOENIX_COLLECTOR_ENDPOINT"] = "https://app.phoenix.arize.com";
 
-// For troubleshooting, set the log level to DiagLogLevel.DEBUG
-// This is not required and should not be added in a production setting
-diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+// For development debugging
+if (process.env.NODE_ENV === "development") {
+  diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+}
 
 export function register() {
   // Skip registration in browser environment
   if (typeof window !== 'undefined') return;
 
   registerOTel({
-    serviceName: "phoenix-next-app",
+    serviceName: "bents-chat-app",
     attributes: {
       // This is not required but it will allow you to send traces to a specific
       // project in phoenix
@@ -33,7 +34,7 @@ export function register() {
           headers: {
             api_key: process.env["PHOENIX_CLIENT_HEADERS"]?.split("=")[1],
           },
-          url: `${process.env["PHOENIX_COLLECTOR_ENDPOINT"]}/v1/traces`,
+          url: `${process.env.PHOENIX_COLLECTOR_ENDPOINT}`,
         }),
         spanFilter: (span) => isOpenInferenceSpan(span),
       }),
