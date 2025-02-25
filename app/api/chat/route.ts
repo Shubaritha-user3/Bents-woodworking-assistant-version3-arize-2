@@ -223,6 +223,13 @@ export async function POST(req: Request) {
             role: 'user',
             content: `Please respond with the following message: "I apologize, but I cannot assist with inappropriate content or queries that could cause harm. I'm here to help with woodworking and furniture making questions only."`
           }],
+          experimental_telemetry: {
+            isEnabled: true,
+            metadata: { 
+              route: "api/chat",
+              type: "inappropriate"
+            },
+          },
         });
         return result.toDataStreamResponse();
       }
@@ -240,6 +247,13 @@ export async function POST(req: Request) {
               Question: ${lastUserMessage}`
             }
           ],
+          experimental_telemetry: {
+            isEnabled: true,
+            metadata: { 
+              route: "api/chat",
+              type: "not_relevant"
+            },
+          },
         });
         return result.toDataStreamResponse();
       }
