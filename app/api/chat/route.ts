@@ -205,6 +205,13 @@ export async function POST(req: Request) {
             role: 'user', 
             content: `The following message is a greeting or casual message. Please provide a friendly and engaging response: ${lastUserMessage}` 
           }],
+          experimental_telemetry: {
+            isEnabled: true,
+            metadata: { 
+              route: "api/chat",
+              type: "greeting"
+            },
+          },
         });
         return result.toDataStreamResponse();
       }
@@ -310,15 +317,15 @@ export async function POST(req: Request) {
         }
       ],
       experimental_telemetry: {
-        isEnabled: true,
-        metadata: { 
-          route: "api/chat",
-          relevanceResult,
-          hasContext: Boolean(contextTexts)
+          isEnabled: true,
+          metadata: { 
+            route: "api/chat",
+            relevanceResult,
+            hasContext: Boolean(contextTexts)
+          },
         },
-      },
-    });
-    console.log('✅ [POST] Response streamed');
+      });
+    console.log('✅ [POST] Response streamed'); 
     return result.toDataStreamResponse();
 
   } catch (error) {

@@ -10,7 +10,7 @@ import { SEMRESATTRS_PROJECT_NAME } from "@arizeai/openinference-semantic-conven
 // Set environment variables for Phoenix
 process.env["OTEL_EXPORTER_OTLP_HEADERS"] = "api_key=8bb925c083f54c64a9c:affd41e";
 process.env["PHOENIX_CLIENT_HEADERS"] = "api_key=8bb925c083f54c64a9c:affd41e";
-process.env["PHOENIX_COLLECTOR_ENDPOINT"] = "https://app.phoenix.arize.com";
+process.env["PHOENIX_COLLECTOR_ENDPOINT"] = "https://app.phoenix.arize.com/v1/traces";
 
 // For development debugging
 if (process.env.NODE_ENV === "development") {
@@ -32,9 +32,9 @@ export function register() {
       new OpenInferenceSimpleSpanProcessor({
         exporter: new OTLPTraceExporter({
           headers: {
-            api_key: process.env["PHOENIX_CLIENT_HEADERS"]?.split("=")[1],
+            api_key: process.env["PHOENIX_CLIENT_HEADERS"]?.split("api_key=")[1] || "8bb925c083f54c64a9c:affd41e"
           },
-          url: `${process.env.PHOENIX_COLLECTOR_ENDPOINT}`,
+          url: "https://app.phoenix.arize.com/v1/traces",
         }),
         spanFilter: (span) => isOpenInferenceSpan(span),
       }),

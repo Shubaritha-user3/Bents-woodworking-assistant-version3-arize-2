@@ -22,6 +22,8 @@ const pool = new Pool({
   maxUses: 7500 // Close a connection after it has been used 7500 times
 });
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
