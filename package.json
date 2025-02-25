@@ -46,8 +46,7 @@
     "react-youtube": "^10.1.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "uuid": "^11.0.3",
-    "@opentelemetry/sdk-node": "^1.18.1"
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/node": "20.17.19",
